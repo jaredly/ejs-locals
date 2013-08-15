@@ -82,7 +82,7 @@ var renderFile = module.exports = function(file, options, fn){
   options.locals.layout  = layout.bind(options);
   options.locals.partial = partial.bind(options);
 
-  ejs.renderFile(file, options, function(err, html) {
+  (options.ejsRenderFile || ejs.renderFile)(file, options, function(err, html) {
 
     if (err) {
       return fn(err,html);
@@ -331,7 +331,7 @@ function partial(view, options){
       }
     }
     // TODO Support other templates (but it's sync now...)
-    var html = ejs.render(source, options);
+    var html = (options.ejsRender || ejs.render)(source, options);
     return html;
   }
 
